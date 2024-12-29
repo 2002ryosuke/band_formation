@@ -10,9 +10,48 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_12_27_084125) do
+ActiveRecord::Schema[7.0].define(version: 2024_12_29_041723) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "band_requests", force: :cascade do |t|
+    t.string "name"
+    t.string "music_name"
+    t.integer "playing_time"
+    t.bigint "my_category_id"
+    t.bigint "recruting_category_id"
+    t.integer "count"
+    t.text "comment"
+    t.bigint "recruiting_user_id"
+    t.bigint "user_id", null: false
+    t.bigint "event_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_band_requests_on_event_id"
+    t.index ["my_category_id"], name: "index_band_requests_on_my_category_id"
+    t.index ["recruiting_user_id"], name: "index_band_requests_on_recruiting_user_id"
+    t.index ["recruting_category_id"], name: "index_band_requests_on_recruting_category_id"
+    t.index ["user_id"], name: "index_band_requests_on_user_id"
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.string "name"
+    t.datetime "day"
+    t.string "place"
+    t.integer "min_bans"
+    t.integer "max_bans"
+    t.text "comment"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_events_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -28,4 +67,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_27_084125) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "band_requests", "categories", column: "my_category_id"
+  add_foreign_key "band_requests", "categories", column: "recruting_category_id"
+  add_foreign_key "band_requests", "events"
+  add_foreign_key "band_requests", "users"
+  add_foreign_key "band_requests", "users", column: "recruiting_user_id"
+  add_foreign_key "events", "users"
 end

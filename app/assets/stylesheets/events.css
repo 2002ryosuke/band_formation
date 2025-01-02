@@ -1,39 +1,108 @@
+/* app/assets/stylesheets/events.css */
+h1 {
+  font-size: 2em; /* 文字サイズを大きく */
+  font-weight: bold; /* 太字 */
+  margin-bottom: 20px; /* 下マージンを調整 */
+  text-align: center; /* 中央揃えを明示的に指定 */
+  color: #333; /* 文字色を少し濃く */
+  border-bottom: 2px solid #ccc; /* 下線を追加 */
+  padding-bottom: 10px; /* 下線の余白 */
+}
 
 
-.event-form { 
-  background-color: #f8f9fa;
+.form-group {
+  margin-bottom: 15px; /* 各form-group間のマージン */
+}
+
+.container {
+  max-width: 800px;
+  margin: 20px auto;
   padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-
-  h1 { 
-      text-align: center;
-      margin-bottom: 20px;
-  }
-
-  .form-label {
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-    display: block; 
-  }
-  .form-control {
-      width: 100%;
-      padding: 0.5rem;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
-  }
-  .row {
-      margin: 10px 0;
-  }
 }
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 10px -10px; /* 左右のマージンを打ち消す */
+}
+
+.col-md-8 {
+  max-width: 800px; /* 必要に応じて調整 */
+  margin: 0 auto; /* 左右のマージンをautoにして中央揃え */
+}
+
+.col-md-6 {
+    flex: 0 0 calc(50% - 20px); /* 左右のマージンを考慮 */
+    max-width: calc(50% - 20px);
+    padding: 0 10px; /* 左右にマージンを設定 */
+    box-sizing: border-box;
+}
+
+.form-label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
 .btn {
-    margin: 10px 0;
-}
-.alert {
-    margin: 10px 0;
+  display: inline-block;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
 }
 
-#new-event-specific-style {
-  color: blue;
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn-small {
+  padding: 5px 10px; /* パディングを小さく */
+  font-size: 0.9em; /* 文字サイズを少し小さく */
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.mb-3 {
+  margin-bottom: 1rem;
+}
+
+.mb-4 {
+  margin-bottom: 1.5rem;
+}
+
+.my-5 {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.fw-bold {
+    font-weight: bold;
 }

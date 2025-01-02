@@ -1,14 +1,16 @@
+<%# app/views/user/events/new.html.erb %>
 <%= stylesheet_link_tag 'events', media: 'all', 'data-turbo-track': 'reload' %>
 
 <div class="container my-5">
   <div class="row justify-content-center">
     <div class="col-md-8">
       <h1 class="text-center mb-4">新しいイベントを開催する</h1>
-      <%= link_to '作成した一覧イベントページに戻る', user_events_path, class: "btn btn-secondary mb-3" %>
+      <%= link_to '作成した一覧イベントページに戻る', user_events_path, class: "btn btn-secondary btn-small mb-3" %>
+
       <%= form_with(model: @event, url: user_events_path(@user), local: true) do |e| %>
         <% if @event.errors.any? %>
           <div id="error_explanation" class="alert alert-danger">
-            <h2><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h2>
+            <h2><%= pluralize(@event.errors.count, "件のエラー") %> このイベントは保存できませんでした:</h2>
             <ul>
               <% @event.errors.full_messages.each do |message| %>
                 <li><%= message %></li>
@@ -17,36 +19,35 @@
           </div>
         <% end %>
 
-        <div class="mb-3">
-          <%= e.label :name, 'イベントの名前', class: 'form-label fw-bold' %>
+        <div class="form-group mb-3"> <%# form-group を追加 %>
+          <%= e.label :name, 'イベントの名前', class: 'form-label' %>
           <%= e.text_field :name, id: 'name', class: 'form-control', placeholder: '例：音楽フェスティバル' %>
         </div>
 
-        <div class="mb-3">
-          <%= e.label :day, '開催日時', class: 'form-label fw-bold' %>
+        <div class="form-group mb-3"> <%# form-group を追加 %>
+          <%= e.label :day, '開催日時', class: 'form-label' %>
           <%= e.datetime_field :day, id: 'day', class: 'form-control', placeholder: '例：2024-12-31 18:00' %>
-          <%# 必要に応じて日付ピッカーライブラリを導入してください %>
         </div>
 
-        <div class="mb-3">
-          <%= e.label :place, '開催場所', class: 'form-label fw-bold' %>
+        <div class="form-group mb-3"> <%# form-group を追加 %>
+          <%= e.label :place, '開催場所', class: 'form-label' %>
           <%= e.text_field :place, id: 'place', class: 'form-control', placeholder: '例：岡山大学' %>
         </div>
 
         <div class="row mb-3">
-          <div class="col-md-6">
-            <%= e.label :min_bans, '最小バンド数', class: 'form-label fw-bold' %>
+          <div class="col-md-6 form-group"> <%# form-group を追加 %>
+            <%= e.label :min_bans, '最小バンド数', class: 'form-label' %>
             <%= e.number_field :min_bans, id: 'min_bans', class: 'form-control', placeholder: '例：1' %>
           </div>
-          <div class="col-md-6">
-            <%= e.label :max_bans, '最大バンド数', class: 'form-label fw-bold' %>
+          <div class="col-md-6 form-group"> <%# form-group を追加 %>
+            <%= e.label :max_bans, '最大バンド数', class: 'form-label' %>
             <%= e.number_field :max_bans, id: 'max_bans', class: 'form-control', placeholder: '例：5' %>
           </div>
         </div>
 
-        <div class="mb-3">
-          <%= e.label :comment, 'コメント', class: 'form-label fw-bold' %>
-          <%= e.text_field :comment, id: 'comment', class: 'form-control', style: "width:40%", rows: "3" %>
+        <div class="form-group mb-3"> <%# form-group を追加 %>
+          <%= e.label :comment, 'コメント', class: 'form-label' %>
+          <%= e.text_area :comment, id: 'comment', class: 'form-control', rows: "3", placeholder: 'イベントに関するコメント' %> <%# text_area に変更、placeholder追加 %>
         </div>
 
         <div class="d-grid gap-2">

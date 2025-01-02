@@ -1,26 +1,46 @@
-<h1>User::Events#index</h1>
-<p>Find me in app/views/user/events/index.html.erb</p>
+<%= stylesheet_link_tag 'events_index', media: 'all', 'data-turbo-track': 'reload' %>
+
+<h1>Events</h1>
+
 <table>
   <thead>
     <tr>
       <th>Name</th>
       <th>Day</th>
       <th>Place</th>
-      <th colspan="3"></th>
+      <th colspan="3">Actions</th> <%# Actionsに変更 %>
     </tr>
   </thead>
 
+  <table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Date</th>
+      <th>Time</th>
+      <th>Place</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
   <tbody>
     <% @events.each do |event| %>
       <tr>
-        <td><%= event.name %></td>
-        <td><%= event.day %></td>
+        <td><%= link_to event.name, user_event_path(@user, event) %></td> <%# イベント名をクリックで詳細へ %>
+        <td><%= event.day.strftime("%Y年%m月%d日(#{%w[日 月 火 水 木 金 土][event.day.wday]})") %></td>
+        <td><%= event.day.strftime("%H時%M分") %></td>
         <td><%= event.place %></td>
-        <td><%= link_to 'Show', user_event_path(@user, event) %></td>
-        <td><%= link_to 'Edit', edit_user_event_path(@user, event) %></td>
-        <td><%= link_to 'Destroy', user_event_path(@user, event), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td class="actions">
+        <%# TODO:詳細ページの中に、編集ページと削除ページのリンクを作成する %>
+          <%= link_to edit_user_event_path(@user, event) do %>
+            <i class="fas fa-edit"></i>
+          <% end %>
+          <%= link_to user_event_path(@user, event), method: :delete, data: { confirm: 'Are you sure?' } do %>
+            <i class="fas fa-trash-alt"></i>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
-<%= link_to 'Create New Event', new_user_event_path %>
+
+<%= link_to 'Create New Event', new_user_event_path, class: "create-event-link" %>

@@ -4,7 +4,7 @@
       <h1 class="text-center md-4">イベントの詳細</h1>
       <%= link_to '作成した一覧イベントページに戻る', user_events_path, class: "btn btn-secondary btn-small mb-3" %>
 
-      <% @event%>
+      <p>イベント番号: <%= @event.random_number %></p>
     </div>
   </div>
 </div>

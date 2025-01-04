@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_12_30_180543) do
+ActiveRecord::Schema[7.0].define(version: 2025_01_02_143756) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -40,6 +40,17 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_30_180543) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "event_users", force: :cascade do |t|
+    t.bigint "event_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "participated_at"
+    t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_event_users_on_event_id"
+    t.index ["user_id"], name: "index_event_users_on_user_id"
+  end
+
   create_table "events", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "day"
@@ -50,6 +61,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_30_180543) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "random_number"
+    t.index ["random_number"], name: "index_events_on_random_number", unique: true
     t.index ["user_id"], name: "index_events_on_user_id"
   end
 
@@ -72,5 +85,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_30_180543) do
   add_foreign_key "band_requests", "events"
   add_foreign_key "band_requests", "users"
   add_foreign_key "band_requests", "users", column: "recruiting_user_id"
+  add_foreign_key "event_users", "events"
+  add_foreign_key "event_users", "users"
   add_foreign_key "events", "users"
 end

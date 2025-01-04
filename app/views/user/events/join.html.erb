@@ -1,0 +1,6 @@
+<h1>イベント参加ページ</h1>
+<%= form_with(url: events_path, method: :get) do |form| %>
+  <%= form.label :random_number, "イベント番号を入力してください:" %>
+  <%= form.text_field :random_number %>
+  <%= form.submit "参加" %>
+<% end %>

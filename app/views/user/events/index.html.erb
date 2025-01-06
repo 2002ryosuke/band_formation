@@ -6,16 +6,6 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>Day</th>
-      <th>Place</th>
-      <th colspan="3">Actions</th> <%# Actionsに変更 %>
-    </tr>
-  </thead>
-
-  <table>
-  <thead>
-    <tr>
-      <th>Name</th>
       <th>Date</th>
       <th>Time</th>
       <th>Place</th>
@@ -25,7 +15,7 @@
   <tbody>
     <% @events.each do |event| %>
       <tr>
-        <td><%= link_to event.name, user_event_path(@user, event) %></td> <%# イベント名をクリックで詳細へ %>
+        <td><%= link_to event.name, user_event_path(event) %></td> <%# イベント名をクリックで詳細へ %>
         <td><%= event.day.strftime("%Y年%m月%d日(#{%w[日 月 火 水 木 金 土][event.day.wday]})") %></td>
         <td><%= event.day.strftime("%H時%M分") %></td>
         <td><%= event.place %></td>

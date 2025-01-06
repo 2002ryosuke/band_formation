@@ -63,12 +63,12 @@ event_users = [
   { event: Event.third, user: User.first, participated_at: DateTime.new(2024, 10, 19), status: 0}
 ]
 
-event_users.each do |event_user_data|
-  EventUser.find_or_create_by!(event: event_user_data[:event], user: event_user_data[:user]) do |event_user|
-    event_user.participated_at = event_user_data[:participated_at]
-    event_user.status = event_user_data[:status]
-  end
-end
+# event_users.each do |event_user_data|
+#   EventUser.find_or_create_by!(event: event_user_data[:event], user: event_user_data[:user]) do |event_user|
+#     event_user.participated_at = event_user_data[:participated_at]
+#     event_user.status = event_user_data[:status]
+#   end
+# end
 
 puts "Created #{EventUser.count} event users"
 

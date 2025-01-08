@@ -1,18 +1,23 @@
 <%= stylesheet_link_tag 'events_participation', media: 'all', 'data-turbo-track': 'reload' %>
-<h1>自分が参加できるイベントの選択画面</h1>
 
-<% @event.each do |e| %>
-  <div>
-    <%= e.name %>
-    <%= link_to "詳細を見る", user_event_path(e) %> <%# 詳細ページへのリンクを追加 %>
+<div class="container_prarticipation">
+  <h2 class="section-title">自分が参加できるイベントの選択画面</h2>
+  <div class="event-list">
+    <% @event.each do |e| %>
+      <div class="event-card">
+        <h3 class="event-name"><%= e.name %></h3>
+        <%= link_to "詳細を見る", user_event_path(e), class: "event-link" %>
+      </div>
+    <% end %>
   </div>
-<% end %>
 
-<div>自分が作成したイベント</div>
-
-<% @my_event.each do |e| %>
-  <div>
-    <%= e.name %>
-    <%= link_to "詳細", user_event_path(e) %> <%# 編集ページへのリンクを追加 %>
+  <h2 class="section-title">自分が作成したイベント</h2>
+  <div class="event-list">
+    <% @my_event.each do |e| %>
+      <div class="event-card">
+        <h3 class="event-name"><%= e.name %></h3>
+        <%= link_to "詳細", user_event_path(e), class: "event-link" %>
+      </div>
+    <% end %>
   </div>
-<% end %>
+</div>

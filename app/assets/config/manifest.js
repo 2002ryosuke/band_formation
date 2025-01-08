@@ -4,3 +4,4 @@
 //= link events_index.css
 //= link events_participation.css
 //= link band_request.css
+//= link event_show.css

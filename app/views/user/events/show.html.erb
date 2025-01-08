@@ -1,18 +1,58 @@
-<div class="container my-5">
-  <div class="row justify-content-center">
-    <div class="col-md-8">
-      <h1 class="text-center md-4">イベントの詳細</h1>
-      <%= link_to '作成した一覧イベントページに戻る', user_events_path, class: "btn btn-secondary btn-small mb-3" %>
+<%= stylesheet_link_tag 'event_show', media: 'all', 'data-turbo-track': 'reload' %>
+<div class="container">
+  <div class="event-header">
+    <h1><%= @event.name %></h1>
+    <p class="random-number">イベントID: <%= @event.random_number %></p>
+  </div>
 
-      <p>イベント番号: <%= @event.random_number %></p>
-    </div>
+  <div class="event-details">
+    <p>開催日時: <%= @event.day&.strftime("%Y年%m月%d日 %H:%M") %></p>
+    <p>開催場所: <%= @event.place %></p>
+    <p>募集バンド数: <%= @event.min_bans %>〜<%= @event.max_bans %>バンド</p>
+    <% if @event.comment.present? %>
+      <p>コメント: <%= @event.comment %></p>
+    <% end %>
+  </div>
+
+<%= link_to 'バンド募集ページ', new_user_event_band_path(@event), class: "btn"  %>
+<%= link_to '参加可能ページに戻る',  user_events_participation_path, class: "btn" %>
+
+  <h2>自分が募集しているバンド</h2>
+  <div class="band-requests">
+    <% @my_bands.each do |band_request| %>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title"><%= band_request.name %></h5>
+          <p class="card-text">募集曲: <%= band_request.music_name %></p>
+          <p class="card-text">作成者: <%= band_request.user.name %></p>
+          <p class="card-text">担当楽器: <%= band_request.my_category&.name %></p>
+          <p class="card-text">募集楽器: <%= band_request.recruting_category&.name %></p>
+          <p class="card-text">募集人数: <%= band_request.count %>人</p>
+          <% if band_request.comment.present? %>
+            <p class="card-text">コメント: <%= band_request.comment %></p>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+
+  <h2>募集バンド</h2>
+  <div class="band-requests">
+    <% @other_bands.each do |band_request| %>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title"><%= band_request.name %></h5>
+          <p class="card-text">募集曲: <%= band_request.music_name %></p>
+          <p class="card-text">作成者: <%= band_request.user.name %></p>
+          <p class="card-text">担当楽器: <%= band_request.my_category&.name %></p>
+          <p class="card-text">募集楽器: <%= band_request.recruting_category&.name %></p>
+          <p class="card-text">募集人数: <%= band_request.count %>人</p>
+          <% if band_request.comment.present? %>
+            <p class="card-text">コメント: <%= band_request.comment %></p>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>
-
-<% @bands.each do |b| %>
- <div>
-  <%= b.music_name %>
-  </div>
-<% end %>
-
-<%= link_to "新規バンド作成ページ", new_user_event_band_path(@event) %>

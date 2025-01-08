@@ -13,11 +13,11 @@ Rails.application.routes.draw do
     post 'events/join', to: 'events#join'
     get 'events/participation', to: 'events#participation'
     resources :events do
-      resources :bands 
+      resources :bands, only: [:create, :new, :show, :edit, :update]
     end
   end
-  
 
+  
   # Sidekiq has a web dashboard which you can enable below. It's turned off by
   # default because you very likely wouldn't want this to be available to
   # everyone in production.

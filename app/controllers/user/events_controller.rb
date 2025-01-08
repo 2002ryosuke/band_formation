@@ -36,7 +36,7 @@ class User::EventsController < ApplicationController
 
     if @event.save
       flash[:success] = 'Event was successfully created.'
-      redirect_to user_event_path(current_user, @event)
+      redirect_to user_event_path(@event)
     else
       Rails.logger.error "Save failed: #{@event.errors.full_messages}"
       flash.now[:danger] = 'Eventは作成出来ませんでした'
@@ -70,13 +70,13 @@ class User::EventsController < ApplicationController
 
     if @event.users.include?(current_user)
       flash[:alert] = "すでにイベントに参加しています"
-      redirect_to user_event_url(@event)
+      redirect_to user_event_path(@event)
       return
     end
 
     @event.users << current_user
     flash[:notice] = "イベントに参加しました"
-    redirect_to user_event_url(@event)
+    redirect_to user_event_path(@event)
   end
   
   def participation

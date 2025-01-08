@@ -1,0 +1,59 @@
+<%= stylesheet_link_tag 'band_request', media: 'all', 'data-turbo-track': 'reload' %>
+<h1 class="page-title">New Band for <%= @event.name %></h1>
+
+<div class="form-container">
+  <%= form_with(model: @band_request, url: user_event_bands_path(@event), local: true, html: { class: 'band-form' }) do |form| %>
+    <% if @band_request.errors.any? %>
+      <div id="error_explanation" class="alert alert-danger">
+        <h2><%= pluralize(@band_request.errors.count, "件のエラー") %> このバンド募集は出来ませんでした:</h2>
+        <ul>
+          <% @band_request.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= form.label :name, "バンド名", class: 'form-label' %>
+      <%= form.text_field :name, id: 'name', class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :music_name, "曲名", class: 'form-label' %>
+      <%= form.text_field :music_name, id: 'music_name', class: 'form-control' %>
+    </div>
+
+    <div class="form-group time-group">
+      <%= form.label :playing_time, "演奏時間", class: 'form-label' %>
+      <div class="time-inputs">
+        <%= form.number_field :playing_time, id: 'playing_time', class: 'form-control', placeholder: "分" %>
+        <%= form.number_field :seconds, id: 'seconds', class: 'form-control', placeholder: "秒" %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :my_category, "自分が担当する楽器", class: 'form-label' %>
+      <%= form.collection_select :my_category_id, @categories, :id, :name, { prompt: '自分の役割を選択してください' }, { class: 'form-control' } %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :recruting_category, "募集する楽器", class: 'form-label' %>
+      <%= form.collection_select :recruting_category_id, @categories, :id, :name, { prompt: '希望する相手の役割を選択してください' }, { class: 'form-control' } %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :count, "募集する人数", class: 'form-label' %>
+      <%= form.number_field :count, id: 'count', class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :comment, "コメント", class: 'form-label' %>
+      <%= form.text_area :comment, id: 'comment', class: 'form-control' %>
+    </div>
+
+    <div class="form-actions">
+      <%= form.submit "Submit", class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+</div>

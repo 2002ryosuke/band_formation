@@ -1,4 +1,4 @@
-class User::Events::BandsController < ApplicationController
+class User::BandsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_event, only: [:new, :create]
 
@@ -13,16 +13,17 @@ class User::Events::BandsController < ApplicationController
 
   def new
     @band_request = @event.band_requests.new
-    @categories = Categories.all
+    @categories = Category.all
+    session[:previous_url] = request.referer  # ここで前ページセッションを保存
   end
 
   def create
     @band_request = @event.band_requests.new(band_request_params)
-    @band.request.user = current_user
+    @band_request.user = current_user
 
     if @band_request.save
       flash[:success] = 'The request for band applications was successful!'
-      redirect_to user_event_path(current_user, @event)
+      redirect_to session[:previous_url]  # create後に遷移させる
     else
       flash.now[:danger] = 'BandRequestは作成出来ませんでした'
       render :new
@@ -32,7 +33,7 @@ class User::Events::BandsController < ApplicationController
   private
 
   def band_request_params
-    params.require(:band_request).permit(:name, :music_name, :playing_time, :my_category_id, :recruiting_user_id, :count, :comment)
+    params.require(:band_request).permit(:name, :music_name, :playing_time, :my_category_id, :recruting_category_id, :count, :comment)
   end
 
   def set_event

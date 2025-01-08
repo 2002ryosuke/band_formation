@@ -1,0 +1,38 @@
+body {
+    font-family: sans-serif; /* 全体のフォントを指定 */
+    margin: 20px; /* 全体の余白を指定 */
+  }
+  
+  h1 {
+    font-size: 2em; /* h1タグのフォントサイズを指定 */
+    margin-bottom: 20px; /* h1タグの下マージンを指定 */
+  }
+  
+  div {
+    margin-bottom: 10px; /* 各イベントの間の余白を指定 */
+    padding: 10px; /* 各イベントの内側の余白を指定 */
+    border: 1px solid #ccc; /* 各イベントの枠線を指定 */
+    border-radius: 5px; /* 各イベントの角を丸くする */
+    background-color: #f8f8f8; /* 各イベントの背景色を指定 */
+  }
+  
+  /* 自分が作成したイベントのスタイル */
+  div:nth-of-type(2) { /* 2番目のdiv（「自分が作成したイベント」の見出し） */
+    margin-top: 30px; /* 上マージンを大きくする */
+    font-weight: bold; /* 太字にする */
+  }
+  
+  /* 自分が作成したイベントの各イベントのスタイル */
+  div:nth-of-type(2) + div { /* 「自分が作成したイベント」の直後のdiv（最初のイベント） */
+      background-color: #e0f2f7; /* 薄い青色の背景色 */
+  }
+  div:nth-of-type(2) + div ~ div { /* 「自分が作成したイベント」以降のすべてのdiv */
+      background-color: #e0f2f7; /* 薄い青色の背景色 */
+  }
+  
+  
+  /* ホバー時のスタイル */
+  div:not(:nth-of-type(2)):hover { /* 「自分が作成したイベント」の見出し以外のdivに適用 */
+    background-color: #e8e8e8; /* ホバー時の背景色を変更 */
+    cursor: pointer; /* カーソルをポインターに変更 */
+  }

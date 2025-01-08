@@ -17,6 +17,7 @@ x-app: &default-app
   tty: true
   volumes:
     - "${DOCKER_WEB_VOLUME:-./public:/app/public}"
+  # command: bash -c "rm -f /app/tmp/pids/server.pid && bin/rails server -b 0.0.0.0"
 
 x-assets: &default-assets
   build:
@@ -69,6 +70,7 @@ services:
 
   web:
     <<: *default-app
+    # command: bash -c "rm -f /app/tmp/pids/server.pid && bin/rails server -b 0.0.0.0"
     deploy:
       resources:
         limits:
@@ -97,7 +99,7 @@ services:
 
   cable:
     <<: *default-app
-    command: "puma -p 28080 cable/config.ru"
+    command: "puma -p 28080 -w 0 cable/config.ru"
     entrypoint: []
     deploy:
       resources:

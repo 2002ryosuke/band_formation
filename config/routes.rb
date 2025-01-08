@@ -9,8 +9,15 @@ Rails.application.routes.draw do
   get '/up/databases', to: 'up#databases', as: :up_databases
 
   namespace :user do
-    resources :events
+    get "events/join_form", to: 'events#join_form'
+    post 'events/join', to: 'events#join'
+    get 'events/participation', to: 'events#participation'
+    resources :events do
+      resources :bands, only: [:create, :new, :show, :edit, :update]
+    end
   end
+
+  
   # Sidekiq has a web dashboard which you can enable below. It's turned off by
   # default because you very likely wouldn't want this to be available to
   # everyone in production.

@@ -18,7 +18,8 @@ class User::EventsController < ApplicationController
     redirect_to user_events_path # 適切なリダイレクト先に変更
   end
 
-  @bands = BandRequest.where(event_id: @event.id)
+  @my_bands = BandRequest.where(event_id: @event.id, user_id: @user.id)
+  @other_bands = BandRequest.where(event_id: @event.id).where.not(user_id: @user.id)
   end
 
   def new

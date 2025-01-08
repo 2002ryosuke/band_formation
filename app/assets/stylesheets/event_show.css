@@ -1,0 +1,60 @@
+.container {
+  max-width: 960px;
+  margin: 20px auto;
+}
+
+.event-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.event-header h1 {
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+.random-number {
+  font-size: 1.2em;
+  color: #777;
+}
+
+.event-details {
+  margin-bottom: 30px;
+  border: 1px solid #ddd;
+  padding: 20px;
+}
+
+.band-requests {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* 画面幅に合わせてカラム数を調整 */
+  grid-gap: 20px;
+}
+
+.card {
+  border: none; /* ボーダーを削除 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* シャドウを追加 */
+  transition: transform 0.2s; /* ホバー時のアニメーションを追加 */
+  border-radius: 8px; /* 角を丸くする */
+  overflow: hidden; /* 内容がはみ出さないように */
+  background-color: #fff; /* 背景色を白に */
+}
+
+.card:hover {
+  transform: translateY(-4px); /* ホバー時に少し持ち上げる */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* ホバー時のシャドウを強調 */
+}
+
+.card-body {
+  padding: 1.5rem; /* パディングを少し大きく */
+}
+
+.card-title {
+  font-weight: bold; /* タイトルを太字に */
+  margin-bottom: 1rem;
+  color: #333; /* タイトルの色を変更 */
+}
+
+.card-text {
+  color: #555; /* テキストの色を変更 */
+  margin-bottom: 0.75rem;
+}

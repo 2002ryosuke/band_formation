@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_01_02_143756) do
+ActiveRecord::Schema[7.0].define(version: 2025_01_11_105016) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -22,14 +22,12 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_02_143756) do
     t.bigint "recruting_category_id"
     t.integer "count"
     t.text "comment"
-    t.bigint "recruiting_user_id"
     t.bigint "user_id", null: false
     t.bigint "event_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["event_id"], name: "index_band_requests_on_event_id"
     t.index ["my_category_id"], name: "index_band_requests_on_my_category_id"
-    t.index ["recruiting_user_id"], name: "index_band_requests_on_recruiting_user_id"
     t.index ["recruting_category_id"], name: "index_band_requests_on_recruting_category_id"
     t.index ["user_id"], name: "index_band_requests_on_user_id"
   end
@@ -66,6 +64,27 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_02_143756) do
     t.index ["user_id"], name: "index_events_on_user_id"
   end
 
+  create_table "interests", force: :cascade do |t|
+    t.bigint "band_request_id", null: false
+    t.bigint "participation_requsest_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["band_request_id"], name: "index_interests_on_band_request_id"
+    t.index ["participation_requsest_id"], name: "index_interests_on_participation_requsest_id"
+  end
+
+  create_table "participation_requsests", force: :cascade do |t|
+    t.bigint "category_id", null: false
+    t.text "comment"
+    t.bigint "user_id", null: false
+    t.bigint "band_request_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["band_request_id"], name: "index_participation_requsests_on_band_request_id"
+    t.index ["category_id"], name: "index_participation_requsests_on_category_id"
+    t.index ["user_id"], name: "index_participation_requsests_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -84,8 +103,12 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_02_143756) do
   add_foreign_key "band_requests", "categories", column: "recruting_category_id"
   add_foreign_key "band_requests", "events"
   add_foreign_key "band_requests", "users"
-  add_foreign_key "band_requests", "users", column: "recruiting_user_id"
   add_foreign_key "event_users", "events"
   add_foreign_key "event_users", "users"
   add_foreign_key "events", "users"
+  add_foreign_key "interests", "band_requests"
+  add_foreign_key "interests", "participation_requsests"
+  add_foreign_key "participation_requsests", "band_requests"
+  add_foreign_key "participation_requsests", "categories"
+  add_foreign_key "participation_requsests", "users"
 end

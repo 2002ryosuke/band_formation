@@ -6,6 +6,7 @@ class User::BandsController < ApplicationController
   end
 
   def show
+    
   end
 
   def edit

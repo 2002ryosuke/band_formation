@@ -1,96 +1,84 @@
-# seeds.rb
+# db/seeds.rb
 
-# Create Users
-users = [
-  { name: "Alice", email: "alice@example.com", password: "password", status: 0 },
-  { name: "Bob", email: "bob@example.com", password: "password", status: 1 },
-  { name: "Charlie", email: "charlie@example.com", password: "password", status: 0 },
-  { name: "David", email: "david@example.com", password: "password", status: 0 }
-]
+# ユーザーの作成
+User.create!(name: "管理者1", email: "admin1@example.com", password: "password", password_confirmation: "password", status: 1) # status 1は管理者とする
+User.create!(name: "ユーザー1", email: "user1@example.com", password: "password", password_confirmation: "password")
+User.create!(name: "ユーザー2", email: "user2@example.com", password: "password", password_confirmation: "password")
 
-users.each do |user_data|
-  User.find_or_create_by!(email: user_data[:email]) do |user|
-    user.name = user_data[:name]
-    user.password = user_data[:password]
-    user.password_confirmation = user_data[:password] # Important for Devise if used
-    user.status = user_data[:status]
-  end
-end
-
-puts "Created #{User.count} users"
-
-# Create Categories
+# カテゴリ（楽器の種類）の作成
 categories = [
-  { name: "Rock" },
-  { name: "Pop" },
-  { name: "Jazz" },
-  { name: "Metal" },
-  { name: "Blues" }
+  { name: "ギター" },
+  { name: "ベース" },
+  { name: "ドラム" },
+  { name: "ボーカル" },
+  { name: "キーボード" },
+  { name: "その他" }
 ]
+Category.create!(categories)
 
-categories.each do |category_data|
-  Category.find_or_create_by!(name: category_data[:name])
-end
+# イベントの作成 (ユーザー1が主催)
+event1 = Event.create!(
+  name: "夏祭りライブ",
+  day: DateTime.new(2024, 8, 10, 18, 0, 0),
+  place: "市民広場",
+  min_bans: 3,
+  max_bans: 5,
+  comment: "夏祭りを盛り上げよう！",
+  user_id: User.find_by(email: "user1@example.com").id,
+  random_number: SecureRandom.hex(10)
+)
 
-puts "Created #{Category.count} categories"
+event2 = Event.create!(
+  name: "秋の音楽祭",
+  day: DateTime.new(2024, 10, 20, 15, 0, 0),
+  place: "文化センター",
+  min_bans: 2,
+  max_bans: 4,
+  comment: "秋の夜長に音楽を楽しもう！",
+  user_id: User.find_by(email: "user1@example.com").id,
+  random_number: SecureRandom.hex(10)
+)
 
-# Create Events
-events = [
-  { name: "Summer Fest", day: DateTime.new(2024, 8, 10), place: "Central Park", min_bans: 3, max_bans: 5, comment: "Annual summer music festival", user: User.first },
-  { name: "Indie Showcase", day: DateTime.new(2024, 9, 15), place: "The Roxy", min_bans: 2, max_bans: 4, comment: "Showcasing local indie bands", user: User.second },
-  { name: "Jazz Night", day: DateTime.new(2024, 10, 20), place: "Blue Note Club", min_bans: 1, max_bans: 3, comment: "Evening of classic jazz", user: User.first }
-]
 
-events.each do |event_data|
-  Event.find_or_create_by!(name: event_data[:name]) do |event|
-    event.day = event_data[:day]
-    event.place = event_data[:place]
-    event.min_bans = event_data[:min_bans]
-    event.max_bans = event_data[:max_bans]
-    event.comment = event_data[:comment]
-    event.user = event_data[:user]
-    event.random_number = SecureRandom.hex(10)
-  end
-end
+# バンド募集の作成 (ユーザー2がイベント1に対して募集)
+band_request1 = BandRequest.create!(
+  name: "ロックバンド募集",
+  music_name: "オリジナル曲",
+  playing_time: 30,
+  my_category_id: Category.find_by(name: "ギター").id,
+  recruting_category_id: Category.find_by(name: "ボーカル").id,
+  count: 1,
+  comment: "ボーカル募集！経験者歓迎！",
+  user_id: User.find_by(email: "user2@example.com").id,
+  event_id: event1.id
+)
 
-puts "Created #{Event.count} events"
+band_request2 = BandRequest.create!(
+  name: "アコースティックバンド募集",
+  music_name: "カバー曲",
+  playing_time: 45,
+  my_category_id: Category.find_by(name: "ギター").id,
+  recruting_category_id: Category.find_by(name: "ベース").id,
+  count: 1,
+  comment: "アコースティックギター、ベース募集！",
+  user_id: User.find_by(email: "user2@example.com").id,
+  event_id: event2.id
+)
 
-# Create EventUsers (Join Table)
-event_users = [
-  { event: Event.first, user: User.first, participated_at: DateTime.new(2024, 8, 9), status: 1}, # Example status
-  { event: Event.first, user: User.second, participated_at: DateTime.new(2024, 8, 9), status: 0},
-  { event: Event.second, user: User.third, participated_at: DateTime.new(2024, 9, 14), status: 1},
-  { event: Event.third, user: User.first, participated_at: DateTime.new(2024, 10, 19), status: 0}
-]
+# イベント参加 (ユーザー1がイベント1に参加)
+EventUser.create!(
+  event_id: event1.id,
+  user_id: User.find_by(email: "user1@example.com").id,
+  participated_at: DateTime.now, #参加日時
+  status: 1 # 参加
+)
 
-# event_users.each do |event_user_data|
-#   EventUser.find_or_create_by!(event: event_user_data[:event], user: event_user_data[:user]) do |event_user|
-#     event_user.participated_at = event_user_data[:participated_at]
-#     event_user.status = event_user_data[:status]
-#   end
-# end
+#参加リクエスト(ユーザー1がband_request1に参加リクエスト)
+ParticipationRequsest.create!(
+  category_id: Category.find_by(name: "ギター").id,
+  comment: "参加希望です！",
+  user_id: User.find_by(email: "user1@example.com").id,
+  band_request_id: band_request1.id
+)
 
-puts "Created #{EventUser.count} event users"
-
-# Create Band Requests
-band_requests = [
-  { name: "The Rockers", music_name: "Highway Star", playing_time: 30, my_category: Category.find_by(name: "Rock"), recruting_category: Category.find_by(name: "Pop"), count: 4, comment: "Looking for a drummer", recruiting_user: User.third, user: User.first, event: Event.first },
-  { name: "Jazz Masters", music_name: "Take Five", playing_time: 45, my_category: Category.find_by(name: "Jazz"), recruting_category: Category.find_by(name: "Jazz"), count: 3, comment: "Experienced jazz trio", recruiting_user: User.first, user: User.second, event: Event.second },
-  { name: "Metal Mayhem", music_name: "Ironclad", playing_time: 35, my_category: Category.find_by(name: "Metal"), recruting_category: Category.find_by(name: "Rock"), count: 5, comment: "Brutal metal band looking for gigs", recruiting_user: User.second, user: User.third, event: Event.first }
-]
-
-band_requests.each do |band_request_data|
-  BandRequest.find_or_create_by!(name: band_request_data[:name]) do |band_request|
-    band_request.music_name = band_request_data[:music_name]
-    band_request.playing_time = band_request_data[:playing_time]
-    band_request.my_category = band_request_data[:my_category]
-    band_request.recruting_category = band_request_data[:recruting_category]
-    band_request.count = band_request_data[:count]
-    band_request.comment = band_request_data[:comment]
-    band_request.recruiting_user = band_request_data[:recruiting_user]
-    band_request.user = band_request_data[:user]
-    band_request.event = band_request_data[:event]
-  end
-end
-
-puts "Created #{BandRequest.count} band requests"
+puts "Seeds created!"

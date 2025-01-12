@@ -4,4 +4,6 @@ class BandRequest < ApplicationRecord
   belongs_to :recruiting_user, class_name: "User", optional: true
   belongs_to :event
   belongs_to :user
+  has_many :participation_requsests
+  has_many :interest
 end

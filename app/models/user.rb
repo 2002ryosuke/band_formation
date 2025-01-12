@@ -5,6 +5,7 @@ class User < ApplicationRecord
   has_many :events, dependent: :destroy
   has_many :event_users
   has_many :events, through: :event_users
+  has_many :participation_requsests
   
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable

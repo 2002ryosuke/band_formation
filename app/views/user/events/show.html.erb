@@ -39,8 +39,10 @@
 
   <h2>募集バンド</h2>
   <div class="band-requests">
+    <% a=0 %>
     <% @other_bands.each do |band_request| %>
       <div class="card">
+        <%= link_to new_user_event_band_request_url(@event, band_request), class: 'card-link' do %>
         <div class="card-body">
           <h5 class="card-title"><%= band_request.name %></h5>
           <p class="card-text">募集曲: <%= band_request.music_name %></p>
@@ -48,10 +50,13 @@
           <p class="card-text">担当楽器: <%= band_request.my_category&.name %></p>
           <p class="card-text">募集楽器: <%= band_request.recruting_category&.name %></p>
           <p class="card-text">募集人数: <%= band_request.count %>人</p>
+          <p class="card-text">募集済み人数: <%= @other_count[a] %>人</p>
           <% if band_request.comment.present? %>
             <p class="card-text">コメント: <%= band_request.comment %></p>
           <% end %>
         </div>
+        <% a += 1 %>
+        <% end %>
       </div>
     <% end %>
   </div>

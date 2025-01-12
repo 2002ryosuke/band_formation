@@ -1,0 +1,31 @@
+<%= stylesheet_link_tag 'request', media: 'all', 'data-turbo-track': 'reload' %> 
+<h1 class="form-title">このバンド募集に参加リクエストを出す</h1>
+
+<div class="form-container">
+  <%= form_with(model: @request, url: user_event_band_request_index_path(@event, @band), local: true) do |e| %>
+    <% if @request.errors.any? %>
+      <div id="error_explanation" class="alert alert-danger">
+        <h2><%= pluralize(@request.errors.count, "件のエラー") %> このリクエストは保存出来ませんでした:</h2>
+        <ul>
+          <% @request.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= e.label :category, '希望する楽器', class: 'form-label' %>
+      <%= e.collection_select :category_id, @categories, :id, :name, { prompt: '希望する楽器' }, { class: 'form-control' } %>
+    </div>
+
+    <div class="form-group">
+      <%= e.label :comment, "コメント", class: 'form-label' %>
+      <%= e.text_area :comment, id: 'comment', class: 'form-control' %>
+    </div>
+
+    <div class="form-actions">
+      <%= e.submit "Request", class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+</div>

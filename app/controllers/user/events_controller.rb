@@ -20,6 +20,9 @@ class User::EventsController < ApplicationController
 
   @my_bands = BandRequest.where(event_id: @event.id, user_id: @user.id)
   @other_bands = BandRequest.where(event_id: @event.id).where.not(user_id: @user.id)
+
+  @my_count=counts(@my_bands)
+  @other_count=counts(@other_bands)
   end
 
   def new
@@ -90,6 +93,20 @@ class User::EventsController < ApplicationController
   def event_params
     params.require(:event).permit(:name, :day, :place, :min_bans, :max_bans, :comment)
   end
+
+  #募集人数
+  def counts(counts)
+    a=[]
+    p counts
+    return 0 if counts.empty? # countsが空の場合、空配列を返すことでnilエラーを防ぐ
+    counts.each do |m|
+      count = Interest.where(band_request_id: m.id).count
+      p count
+      a << count
+    end
+    p a
+  return a
+end
 
   # def generate_unique_random_number
   #   random_number = nil

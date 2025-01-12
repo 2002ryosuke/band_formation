@@ -13,7 +13,9 @@ Rails.application.routes.draw do
     post 'events/join', to: 'events#join'
     get 'events/participation', to: 'events#participation'
     resources :events do
-      resources :bands, only: [:create, :new, :show, :edit, :update]
+      resources :bands, only: [:create, :new, :show, :edit, :update] do
+        resources :request, only: [:create, :new, :destroy]
+      end
     end
   end
 

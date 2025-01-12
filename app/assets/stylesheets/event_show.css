@@ -39,6 +39,13 @@
   background-color: #fff; /* 背景色を白に */
 }
 
+.card-link {
+  text-decoration: none; /* リンクの下線を削除 */
+  display: block; /* ブロック要素として扱う */
+  width: 300px; /* カードの幅 */
+  color: inherit; /* テキストの色を親要素に合わせる */
+}
+
 .card:hover {
   transform: translateY(-4px); /* ホバー時に少し持ち上げる */
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* ホバー時のシャドウを強調 */

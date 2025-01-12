@@ -1,0 +1,80 @@
+/* 全体スタイル */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* タイトル */
+  .form-title {
+    text-align: center;
+    font-size: 1.8rem;
+    color: #007bff;
+    margin: 20px 0;
+  }
+  
+  /* フォームコンテナ */
+  .form-container {
+    width: 90%;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* エラーメッセージ */
+  .alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 15px;
+  }
+  
+  /* フォームグループ */
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  /* ボタン */
+  .btn-primary {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+  
+  /* フォームアクション */
+  .form-actions {
+    text-align: center;
+    margin-top: 20px;
+  }
+  

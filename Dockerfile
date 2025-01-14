@@ -23,8 +23,17 @@ USER ruby
 COPY --chown=ruby:ruby Gemfile* ./
 RUN bundle install --jobs "$(nproc)"
 
-COPY --chown=ruby:ruby package.json *yarn* ./
-RUN yarn install
+FROM node:18-alpine
+WORKDIR /app
+COPY . .
+RUN echo "https://mirrors.tuna.tsinghua.edu.cn/alpine/v3.16/main" > /etc/apk/repositories 
+RUN echo "https://mirrors.tuna.tsinghua.edu.cn/alpine/v3.16/community" >> /etc/apk/repositories 
+RUN apk add --no-cache --update python3 make g++
+RUN yarn config set registry http://registry.npmmirror.com
+RUN yarn cache clean
+RUN yarn install --production --force
+CMD ["node","src/index.js"]
+EXPOSE 3000
 
 ARG RAILS_ENV="production"
 ARG NODE_ENV="production"
@@ -36,7 +45,7 @@ ENV RAILS_ENV="${RAILS_ENV}" \
 COPY --chown=ruby:ruby . .
 
 RUN if [ "${RAILS_ENV}" != "development" ]; then \
-  SECRET_KEY_BASE=dummyvalue rails assets:precompile; fi
+  SECRET_KEY_BASE=dummyvalue bin/rails assets:precompile; fi
 
 CMD ["bash"]
 

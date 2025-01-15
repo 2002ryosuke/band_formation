@@ -1,7 +1,7 @@
 <%= stylesheet_link_tag 'event_show', media: 'all', 'data-turbo-track': 'reload' %>
-<div class="container">
-  <div class="event-header">
-    <h1 class="event-title"><%= @event.name %></h1>
+<div class="container_event_show">
+  <div class="event-header_event_show">
+    <h1 class="event-title_event_show"><%= @event.name %></h1>
     <p class="random-number">イベントID: <%= @event.random_number %></p>
   </div>
 
@@ -19,9 +19,30 @@
     <%= link_to '参加可能ページに戻る', user_events_participation_path, class: "btn btn-secondary" %>
   </div>
 
-  <h2>自分が募集しているバンド</h2>
-  <div class="band-requests">
+  <h2 class="section-title">自分が募集しているバンド</h2>
+  <div class="band-requests self-requests">
     <% @my_bands.each do |band_request| %>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title"><%= band_request.name %></h5>
+          <p>募集曲: <%= band_request.music_name %></p>
+          <p>担当楽器: <%= band_request.my_category&.name %></p>
+          <p>募集楽器: <%= band_request.recruting_category&.name %></p>
+          <p>募集人数: <%= band_request.count %>人</p>
+          <% if band_request.comment.present? %>
+            <p>コメント: <%= band_request.comment %></p>
+          <% end %>
+          <div class="card-links">
+            <%= link_to "詳細", user_event_band_path(@event, band_request), class: "btn btn-info" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <h2 class="section-title">募集バンド</h2>
+  <div class="band-requests other-requests">
+    <% @other_bands.each_with_index do |band_request, index| %>
       <div class="card">
         <div class="card-body">
           <h5 class="card-title"><%= band_request.name %></h5>
@@ -30,43 +51,25 @@
           <p>担当楽器: <%= band_request.my_category&.name %></p>
           <p>募集楽器: <%= band_request.recruting_category&.name %></p>
           <p>募集人数: <%= band_request.count %>人</p>
-          <% if band_request.comment.present? %>
-            <p>コメント: <%= band_request.comment %></p>
-          <% end %>
-        </div>
-      </div>
-    <% end %>
-  </div>
-
-  <h2>募集バンド</h2>
-  <div class="band-requests">
-    <% @other_bands.each_with_index do |band_request, index| %>
-      <%= link_to new_user_event_band_request_url(@event, band_request), class: 'card-link' do %>
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title"><%= band_request.name %></h5>
-            <p>募集曲: <%= band_request.music_name %></p>
-            <p>作成者: <%= band_request.user.name %></p>
-            <p>担当楽器: <%= band_request.my_category&.name %></p>
-            <p>募集楽器: <%= band_request.recruting_category&.name %></p>
-            <p>募集人数: <%= band_request.count %>人</p>
-           <p class="card-text status">
+          <p class="card-text status">
             <% remaining = band_request.count - @other_count[index] %>
             <% if remaining > 0 %>
-                <span class="status-open">募集中 (残り: <%= remaining %>人)</span>
-              <% elsif remaining == 0 %>
-                <span class="status-full">募集人数に達しました</span>
+              <span class="status-open">募集中 (残り: <%= remaining %>人)</span>
+            <% elsif remaining == 0 %>
+              <span class="status-full">募集人数に達しました</span>
             <% else %>
               <span class="status-over">募集人数を超過しています (超過: <%= remaining.abs %>人)</span>
             <% end %>
           </p>
-
-            <% if band_request.comment.present? %>
-              <p>コメント: <%= band_request.comment %></p>
-            <% end %>
+          <% if band_request.comment.present? %>
+            <p>コメント: <%= band_request.comment %></p>
+          <% end %>
+          <div class="card-links">
+            <%= link_to "参加リクエスト出す", new_user_event_band_request_url(@event, band_request), class: 'btn btn-success' %>
+            <%= link_to "詳細", user_event_band_path(@event, band_request), class: 'btn btn-info' %>
           </div>
         </div>
-      <% end %>
+      </div>
     <% end %>
   </div>
 </div>

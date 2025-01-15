@@ -1,0 +1,60 @@
+/* General Styling */
+.section-title, .subsection-title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+    color: #333;
+  }
+  
+  /* Participant List Styling */
+  .participant-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .participant-card {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .participant-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Text Styling */
+  .participant-name, .participant-category {
+    margin: 10px 0;
+    font-size: 1.2rem;
+    color: #555;
+  }
+  
+  /* Creator Info Styling */
+  .creator-info {
+    background-color: #fff7e6;
+    border: 1px solid #ffc107;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .creator-info p {
+    margin: 10px 0;
+    font-size: 1.2rem;
+    color: #333;
+  }
+  
+  /* Responsive Styling */
+  @media (max-width: 600px) {
+    .participant-list {
+      grid-template-columns: 1fr;
+    }
+  }
+  

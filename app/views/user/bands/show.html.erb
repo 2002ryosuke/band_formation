@@ -1,2 +1,28 @@
-<h1>User::Events::Bands#show</h1>
-<p>Find me in app/views/user/events/bands/show.html.erb</p>
+<%= stylesheet_link_tag 'band_show', media: 'all', 'data-turbo-track': 'reload' %>
+<% if @band_request.user.id == @user.id %>
+  <h1 class="section-title"><%= @user.name %>さんが作成した「<%= @band_request.name %>」の参加者</h1>
+  <div class="participant-list">
+    <% @interests.each do |interest| %>
+      <div class="participant-card">
+        <p class="participant-name"><strong>名前:</strong> <%= interest.participation_requsest.user.name %></p>
+        <p class="participant-category"><strong>希望楽器:</strong> <%= interest.participation_requsest.category.name %></p>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <h1 class="section-title">この募集の作成者情報</h1>
+  <div class="creator-info">
+    <p><strong>名前:</strong> <%= @band_request.user.name %></p>
+    <p><strong>担当楽器:</strong> <%= @band_request.my_category.name %></p>
+  </div>
+
+  <h2 class="subsection-title">リクエスト済み参加者リスト</h2>
+  <div class="participant-list">
+    <% @interests.each do |interest| %>
+      <div class="participant-card">
+        <p class="participant-name"><strong>名前:</strong> <%= interest.participation_requsest.user.name %></p>
+        <p class="participant-category"><strong>希望楽器:</strong> <%= interest.participation_requsest.category.name %></p>
+      </div>
+    <% end %>
+  </div>
+<% end %>

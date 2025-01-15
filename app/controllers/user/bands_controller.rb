@@ -6,7 +6,9 @@ class User::BandsController < ApplicationController
   end
 
   def show
-    
+    @user = current_user
+    @band_request = BandRequest.find_by(id: params[:id])
+    @interests = Interest.where(band_request_id: @band_request.id)
   end
 
   def edit

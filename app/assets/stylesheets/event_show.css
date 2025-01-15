@@ -1,15 +1,15 @@
 /* General Styles */
-.container {
+.container_event_show {
   margin: 20px auto;
   max-width: 1200px;
 }
 
-.event-header {
+.event-header_event_show {
   text-align: center;
   margin-bottom: 20px;
 }
 
-.event-title {
+.event-title_event_show {
   font-size: 2rem;
   color: #333;
 }
@@ -106,3 +106,104 @@
 .status-over {
   color: #dc3545; /* Red for overfilled */
 }
+
+/* General Styling */
+.section-title {
+  text-align: center;
+  margin: 20px 0;
+  font-size: 1.8rem;
+  color: #444;
+}
+
+/* Band Requests Styling */
+.band-requests {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card-links {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 4px;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+.btn-primary {
+  background-color: #007bff;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+}
+
+.btn-info {
+  background-color: #17a2b8;
+}
+
+.btn-success {
+  background-color: #28a745;
+}
+
+/* Status Colors */
+.status {
+  margin-top: 10px;
+}
+
+.status-open {
+  color: #28a745;
+}
+
+.status-full {
+  color: #ffc107;
+}
+
+.status-over {
+  color: #dc3545;
+}
+
+/* Self and Other Requests Styling */
+.self-requests .card {
+  border-left: 4px solid #007bff;
+}
+
+.other-requests .card {
+  border-left: 4px solid #6c757d;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .band-requests {
+    grid-template-columns: 1fr;
+  }
+}
+

@@ -6,3 +6,5 @@
 //= link band_request.css
 //= link event_show.css
 //= link request.css
+//= link join_form.css
+//= link band_show.css
